@@ -1,0 +1,6 @@
+
+# 修改springboot的路径匹配策略，否则整合swagger会报错
+spring:
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
