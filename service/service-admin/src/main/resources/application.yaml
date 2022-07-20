@@ -9,4 +9,4 @@ spring:
       name: user
       password: 123456
 server:
-  port: 8081
+  port: 8088
