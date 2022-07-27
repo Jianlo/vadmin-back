@@ -1,12 +1,22 @@
-
-# 修改springboot的路径匹配策略，否则整合swagger会报错
 spring:
+  application:
+    name: service-admin
+  # 连接数据库
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:  jdbc:mysql://localhost:3306/myadmin?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+  # 修改springboot的路径匹配策略，否则整合swagger会报错
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
-  security:
-    user:
-      name: user
-      password: 123456
+
 server:
   port: 8088
+
+# 配置mybatis日志(sql执行时会在控制台上打印)
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl

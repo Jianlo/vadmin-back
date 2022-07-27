@@ -1,6 +1,13 @@
 
-# 修改springboot的路径匹配策略，否则整合swagger会报错
 spring:
+  # 连接数据库
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url:  jdbc:mysql://localhost:3306/myadmin?useUnicode=true&useSSL=false&characterEncoding=utf8&serverTimezone=Asia/Shanghai
+    username: root
+    password: 123456
+
+  # 修改springboot的路径匹配策略，否则整合swagger会报错
   mvc:
     pathmatch:
       matching-strategy: ant_path_matcher
