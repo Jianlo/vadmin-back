@@ -6,7 +6,6 @@ import com.jian.admin.entity.User;
 import com.jian.admin.service.UserService;
 import com.jian.commonutils.R;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
