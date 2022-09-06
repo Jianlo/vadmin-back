@@ -22,6 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     //指定放行的接口
     private static final String[] URLS_PERMIT = {
             "/admin/user/register",
+            "/admin/captcha/get",
             "/swagger-ui.html",
             "/swagger-resources/**",
             "/webjars/**",

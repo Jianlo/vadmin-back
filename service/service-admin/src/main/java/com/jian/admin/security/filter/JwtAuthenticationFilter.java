@@ -43,7 +43,7 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
         DecodedJWT decodedJWT = JwtUtil.verifyToken(jwt);
         String id = decodedJWT.getClaim("id").asString();
         if(id == null){
-            throw new BusinessException(ResponseCode.FAIL,"jwt异常");
+            throw new BusinessException(ResponseCode.FAIL,"token异常");
         }
 
         User user = userService.getOne(new QueryWrapper<User>().eq("userId", id));
