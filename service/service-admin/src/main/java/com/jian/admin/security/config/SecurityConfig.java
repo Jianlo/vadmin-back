@@ -2,6 +2,7 @@ package com.jian.admin.security.config;
 
 
 import com.jian.admin.security.UserDetailServiceImpl;
+import com.jian.admin.security.filter.CaptchaFilter;
 import com.jian.admin.security.filter.JwtAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -11,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 
 @Configuration
@@ -18,6 +20,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private UserDetailServiceImpl userDetailService;
+
+    @Autowired
+    private CaptchaFilter captchaFilter;
 
     //指定放行的接口
     private static final String[] URLS_PERMIT = {
@@ -58,7 +63,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 //配置自定义过滤器
                 .and()
-                .addFilter(jwtAuthenticationFilter());
+                .addFilter(jwtAuthenticationFilter())
+                .addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class);
 
 
     }
