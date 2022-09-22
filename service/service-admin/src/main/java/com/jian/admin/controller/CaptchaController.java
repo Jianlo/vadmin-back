@@ -8,6 +8,7 @@ import com.jian.servicebase.utils.RedisUtil;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,6 +24,7 @@ import java.util.UUID;
 @Api(tags = "验证码管理")
 @RestController
 @RequestMapping("/admin/captcha")
+@CrossOrigin
 public class CaptchaController {
 
     @Autowired
@@ -46,6 +48,7 @@ public class CaptchaController {
 
         String base64Img = str + encoder.encode(out.toByteArray());
 
+        //把验证码的key和code存到redis
         redisUtil.hset("captcha",key,code,120);
         return R.success().data(MapUtil.builder()
                                         .put("key",key)

@@ -46,7 +46,10 @@ public class CaptchaFilter extends OncePerRequestFilter {
                 out.close();
             }
 
+            //一次性使用
+            redisUtil.hdel("captcha", key);
         }
+
 
         //放行
         filterChain.doFilter(request,response);
