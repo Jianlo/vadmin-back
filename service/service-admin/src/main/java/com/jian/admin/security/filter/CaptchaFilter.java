@@ -44,14 +44,15 @@ public class CaptchaFilter extends OncePerRequestFilter {
                 out.write(json);
                 out.flush();
                 out.close();
+                return;
             }
-
             //一次性使用
             redisUtil.hdel("captcha", key);
         }
 
-
         //放行
         filterChain.doFilter(request,response);
+
+
     }
 }
