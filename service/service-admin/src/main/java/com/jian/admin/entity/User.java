@@ -6,10 +6,16 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
+
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Getter;
 import lombok.Setter;
+
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
  * <p>
@@ -36,6 +42,7 @@ public class User implements Serializable {
 
     @ApiModelProperty("用户名")
     @TableField("username")
+    @NotBlank(message = "用户名不能为空")
     private String username;
 
     @ApiModelProperty("密码")
@@ -44,6 +51,8 @@ public class User implements Serializable {
 
     @ApiModelProperty("邮箱")
     @TableField("email")
+    @NotBlank
+    @Email
     private String email;
 
     @ApiModelProperty("头像")
@@ -60,7 +69,11 @@ public class User implements Serializable {
 
     @ApiModelProperty("用户是否被禁用")
     @TableField("enable")
+    @NotNull
     private Integer enable;
 
+    @ApiModelProperty("关联用户角色信息")
+    @TableField(exist = false)
+    private List<Role> roleList;
 
 }

@@ -9,6 +9,7 @@ public class MyUser extends User {
 
     public MyUser(String username, String password, Collection<? extends GrantedAuthority> authorities) {
         super(username, password, authorities);
+
     }
 
     public MyUser(String username, String password, boolean enabled, boolean accountNonExpired, boolean credentialsNonExpired, boolean accountNonLocked, Collection<? extends GrantedAuthority> authorities) {
