@@ -106,7 +106,7 @@ public class UserController{
         Page<User> userPage = userService.page(page, new QueryWrapper<User>().like("username", username));
         List<User> records = userPage.getRecords();
         for (User record : records) {
-            List<Role> roleList = roleService.list(new QueryWrapper<Role>().inSql("id", "select roleId from userId = " + record.getUserId()));
+            List<Role> roleList = roleService.list(new QueryWrapper<Role>().inSql("id", "select roleId from user_role where userId = " + record.getUserId()));
             record.setRoleList(roleList);
         }
 

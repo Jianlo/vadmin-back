@@ -1,10 +1,8 @@
 package com.jian.admin.mapper;
 
-import com.jian.admin.entity.User;
+import com.jian.admin.entity.Menu;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.apache.ibatis.annotations.Mapper;
-
-import java.util.List;
 
 /**
  * <p>
@@ -12,11 +10,9 @@ import java.util.List;
  * </p>
  *
  * @author jian
- * @since 2022-07-21
+ * @since 2023-05-06
  */
 @Mapper
-public interface UserMapper extends BaseMapper<User> {
-
-    List<String> getPerms(String userId);
+public interface MenuMapper extends BaseMapper<Menu> {
 
 }

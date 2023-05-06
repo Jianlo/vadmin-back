@@ -1,6 +1,6 @@
 package com.jian.admin.service;
 
-import com.jian.admin.entity.User;
+import com.jian.admin.entity.Menu;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 /**
@@ -9,9 +9,8 @@ import com.baomidou.mybatisplus.extension.service.IService;
  * </p>
  *
  * @author jian
- * @since 2022-07-21
+ * @since 2023-05-06
  */
-public interface UserService extends IService<User> {
+public interface MenuService extends IService<Menu> {
 
-    String getAuthorities(String userId);
 }
