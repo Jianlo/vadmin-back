@@ -14,4 +14,6 @@ import com.baomidou.mybatisplus.extension.service.IService;
 public interface UserService extends IService<User> {
 
     String getAuthorities(String userId);
+
+    void clearAuthorities(String userId);
 }

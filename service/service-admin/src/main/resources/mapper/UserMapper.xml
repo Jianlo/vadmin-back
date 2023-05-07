@@ -15,11 +15,11 @@
         <result column="enable" property="enable" />
     </resultMap>
     <select id="getPerms" resultType="java.lang.String">
-        select menuId
+        select distinct rm.menuId
         from user_role ur
                  left join role_menu rm
                            on ur.roleId = rm.roleId
-        where userId = {#userId}
+        where ur.userId = #{userId}
     </select>
 
 

@@ -10,6 +10,8 @@ import com.jian.servicebase.utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.stereotype.Component;
@@ -20,6 +22,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 
 
 public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
@@ -48,10 +51,11 @@ public class JwtAuthenticationFilter extends BasicAuthenticationFilter {
 
         User user = userService.getOne(new QueryWrapper<User>().eq("userId", id));
 
-        // TODO:获取用户权限信息
-
+        //获取用户权限信息
+        String authorities = userService.getAuthorities(user.getUserId());
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
         //将认证信息封装给SpringSecurity
-        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, null, null);
+        UsernamePasswordAuthenticationToken token = new UsernamePasswordAuthenticationToken(user, null, grantedAuthorities);
         SecurityContextHolder.getContext().setAuthentication(token);
 
         chain.doFilter(request,response);

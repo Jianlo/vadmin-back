@@ -78,6 +78,7 @@ public class UserController{
      * @return
      */
 
+    @ApiOperation(value = "获取用户信息")
     @PreAuthorize("hasAuthority('sys:user:list')")  //设置具有相应权限才能访问改接口
     @GetMapping("/{userId}")
     public R getUserById(@PathVariable String userId){
@@ -98,6 +99,7 @@ public class UserController{
      * @return
      */
 
+    @ApiOperation(value = "分页获取用户信息")
     @PreAuthorize("hasAuthority('sys:user:list')")
     @GetMapping("/list")
     public R list(@RequestParam int current, @RequestParam int size, @RequestParam String username){
@@ -119,6 +121,7 @@ public class UserController{
      * @return
      */
 
+    @ApiOperation(value = "添加用户")
     @PreAuthorize("hasAuthority('sys:user:save')")
     @PostMapping("/save")
     public R save(@Validated @RequestBody User user){
@@ -139,6 +142,7 @@ public class UserController{
      * @return
      */
 
+    @ApiOperation(value = "更新用户信息")
     @PreAuthorize("hasAuthority('sys:user:update')")
     @PostMapping("/update")
     public R update(@Validated @RequestBody User user){
@@ -155,6 +159,7 @@ public class UserController{
      * @return
      */
 
+    @ApiOperation(value = "批量删除用户")
     @PreAuthorize("hasAuthority('sys:user:delete')")
     @Transactional //数据库事务
     @PostMapping("/delete")
@@ -165,6 +170,12 @@ public class UserController{
 
         //删除用户角色信息
         userRoleService.remove(new QueryWrapper<UserRole>().in("userId",ids));
+
+        //删除用户权限缓存
+        for (String id : ids) {
+            userService.clearAuthorities(id);
+        }
+
         return R.success();
     }
 
@@ -176,6 +187,7 @@ public class UserController{
      * @return
      */
 
+    @ApiOperation(value = "为用户分配权限")
     @PreAuthorize("hasAuthority('sys:user:role')")
     @Transactional
     @PostMapping("/rolePerm/{userId}")
@@ -193,8 +205,8 @@ public class UserController{
             userRoleService.save(userRole);
         }
 
-        //Todo:删除缓存
-
+        //删除用户权限缓存
+        userService.clearAuthorities(userId);
         return R.success();
     }
 
@@ -204,6 +216,7 @@ public class UserController{
      * @return
      */
 
+    @ApiOperation(value = "重置用户密码")
     @PreAuthorize("hasAuthority('sys:user:repass')")
     @GetMapping("/repass/{userId}")
     public R repass(@PathVariable String userId){

@@ -5,14 +5,14 @@ import com.jian.admin.entity.User;
 import com.jian.admin.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ObjectUtils;
 
-import java.util.ArrayList;
-
+import java.util.List;
 
 
 @Service
@@ -29,8 +29,9 @@ public class UserDetailServiceImpl implements UserDetailsService {
             throw new UsernameNotFoundException("用户名不存在！");
         }
 
-        // TODO:还要查找用户的权限信息，封装到MyUser中
-        ArrayList<GrantedAuthority> list = new ArrayList<>();
-        return new MyUser(user.getUsername(),user.getPassword(),list);
+        //查找用户的权限信息，封装到MyUser中
+        String authorities = userService.getAuthorities(user.getUserId());
+        List<GrantedAuthority> grantedAuthorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authorities);
+        return new MyUser(user.getUsername(),user.getPassword(),grantedAuthorities);
     }
 }
